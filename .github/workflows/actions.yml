@@ -6,11 +6,12 @@ jobs:
     steps: 
       - run: sudo apt-get install texlive-xetex inkscape pandoc 
       - uses: actions/checkout@v4 
-      - run: pip install numpy pint open-atmos-jupyter-utils scipy nbconvert ipykernel 
+      - run: pip install numpy pint open-atmos-jupyter-utils scipy nbconvert ipykernel pympdata
       - run: python -m nbconvert --to pdf --execute Lab1.ipynb 
       - uses: actions/upload-artifact@v4
         with:
           path: Lab1.pdf
   
+
 
 

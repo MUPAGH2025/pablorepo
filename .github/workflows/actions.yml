@@ -1,18 +1,26 @@
 name: generate_pdf_file
 on: push
+
 jobs:
   sprawozdanie:
     runs-on: ubuntu-24.04
-    steps: 
-      - run: sudo apt-get install texlive-xetex inkscape pandoc 
-      - uses: actions/checkout@v4 
-      - run: pip install numpy pint open-atmos-jupyter-utils scipy nbconvert ipykernel PyMPDATA
-      - run: python -m nbconvert --to pdf --execute Lab1.ipynb 
-      - uses: actions/upload-artifact@v4
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install system packages
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y texlive-xetex inkscape pandoc
+
+      - name: Install Python packages
+        run: |
+          pip install numpy pint open-atmos-jupyter-utils scipy nbconvert ipykernel PyMPDATA
+
+      - name: Generate PDF from notebook
+        run: python -m nbconvert --to pdf --execute Lab1.ipynb
+
+      - name: Upload PDF artifact
+        uses: actions/upload-artifact@v4
         with:
+          name: Lab1-pdf
           path: Lab1.pdf
-  
-
-
-
-
